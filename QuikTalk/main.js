@@ -5,10 +5,6 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 
-// Set up P2P connection and the global state
-const pc = new RTCPeerConnection(servers);
-let localStream = null;
-let remoteStream = null;
 
 
 // STUN servers
@@ -23,6 +19,11 @@ const servers = {
   iceCandidatePoolSize: 10,
 }
 
+// Set up P2P connection and the global state
+const pc = new RTCPeerConnection(servers);
+let localStream = null;
+let remoteStream = null;
+
 // Webpage elements
 const webcamButton = document.getElementById('webcamButton');
 const webcamVideo = document.getElementById('webcamVideo');
@@ -32,23 +33,28 @@ const answerButton = document.getElementById('answerButton');
 const remoteVideo = document.getElementById('remoteVideo');
 const hangupButton = document.getElementById('hangupButton');
 
+// 1. Setup media sources
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p> 
-  </div>
-`
+webcamButton.onclick = async () => {
+  localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+  remoteStream = new MediaStream();
 
-setupCounter(document.querySelector('#counter'))
+  // Push tracks from local stream to peer connection
+  localStream.getTracks().forEach((track) => {
+    pc.addTrack(track, localStream);
+  });
+
+  // Pull tracks from remote stream, add to video stream
+  pc.ontrack = (event) => {
+    event.streams[0].getTracks().forEach((track) => {
+      remoteStream.addTrack(track);
+    });
+  };
+
+  webcamVideo.srcObject = localStream;
+  remoteVideo.srcObject = remoteStream;
+
+  callButton.disabled = false;
+  answerButton.disabled = false;
+  webcamButton.disabled = true;
+};
