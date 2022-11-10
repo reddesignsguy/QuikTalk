@@ -8,36 +8,34 @@
   </head>
   <h1>QuikTalk</h1>
   <div id = "app"></div>
+  <h2>QuikTalk is a simple-to-use Video Call application. To connect with another user, all you need to do is follow these steps!</h2>
   <body>
     
+    <h3>1. First, click the "Start Webcam" Button, to begin (Your video will appear under the title "My Webcam!")</h3>
+    <button id="webcamButton">Start Webcam</button>
+
+    <h3>2. If you want to start a conversation, Create a new Call (instructions...)</h3>
+    <button id="callButton" disabled>Create Call (offer)</button>
+
+    <h3>3. If you want to join a conversation, Join a Call (instructions...)</h3>
+    <p>Answer the call from a different browser window or device</p>
+    <input id="callInput" />
+    <button id="answerButton" disabled>Answer</button>
 
     <div class="videos">
       <span>
-        <h3>Local Stream</h3>
+        <h3>My Webcam!</h3>
         <video id="webcamVideo" autoplay playsinline></video>
       </span>
       <span>
-        <h3>Remote Stream</h3>
+        <h3>The video of the other caller will be below here:</h3>
         <video id="remoteVideo" autoplay playsinline></video>
       </span>
 
 
     </div>
 
-    <button id="webcamButton">Start webcam</button>
-    <h2>2. Create a new Call</h2>
-    <button id="callButton" disabled>Create Call (offer)</button>
-
-    <h2>3. Join a Call</h2>
-    <p>Answer the call from a different browser window or device</p>
-    
-    <input id="callInput" />
-    <button id="answerButton" disabled>Answer</button>
-
-    <h2>4. Hangup</h2>
-
+    <h3>3. If you want to end the call, Click Hangup!</h3>
     <button id="hangupButton" disabled>Hangup</button>
-
-    <script type="module" src="/main.js"></script>
   </body>
 </html>
