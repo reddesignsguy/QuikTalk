@@ -1,41 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QuikTalk</title>
-  </head>
-  <h1>QuikTalk</h1>
-  <div id = "app"></div>
-  <h2>QuikTalk is a simple-to-use Video Call application. To connect with another user, all you need to do is follow these steps!</h2>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuikTalk</title>
+</head>
+<div id="app"></div>
+<h1 id = "title">QuikTalk</h1>
+<div id = "section1" class = "center">
+  <h2>Call anyone whether it be a friend, family member, or stranger.</h2>
+
   <body>
-    
-    <h3>1. First, click the "Start Webcam" Button, to begin (Your video will appear under the title "My Webcam!")</h3>
-    <button id="webcamButton">Start Webcam</button>
+    <input id="nameInput" placeholder="Start with your name" size="20">
+    <br>
 
-    <h3>2. If you want to start a conversation, Create a new Call (instructions...)</h3>
-    <button id="callButton" disabled>Create Call (offer)</button>
+    <button id="webcamButton">Next</button>
+</div>
 
-    <h3>3. If you want to join a conversation, Join a Call (instructions...)</h3>
-    <p>Answer the call from a different browser window or device</p>
-    <input id="callInput" />
-    <button id="answerButton" disabled>Answer</button>
+<div id="section2" class = "section2">
+  <h2 id = "displayName"></h2>
+  <p id="roomID"></p>
 
-    <div class="videos">
-      <span>
-        <h3>My Webcam!</h3>
-        <video id="webcamVideo" autoplay playsinline></video>
-      </span>
-      <span>
-        <h3>The video of the other caller will be below here:</h3>
-        <video id="remoteVideo" autoplay playsinline></video>
-      </span>
-
-
+    <div id = "callSelection">
+      <button id="changeNameButton" >Change name</button>
+      <button id="callButton" disabled=true>Start talk</button>
+      <div> or enter your friend's room ID: </div>
+      <input id="callInput" />
+      <button id="answerButton" disabled>Join talk</button>
     </div>
 
-    <h3>3. If you want to end the call, Click Hangup!</h3>
-    <button id="hangupButton" disabled>Hangup</button>
-  </body>
+    <button id="hangupButton" >Leave room</button>
+</div>
+  
+
+</div>
+
+<div id="videos" class="videos">
+  <span>
+    <h3 id="username">You:</h3>
+    <video width=400px id="webcamVideo" autoplay playsinline></video>
+  </span>
+  <span>
+    <h3 id="remoteUsername"></h3>
+    <video width=400px id="remoteVideo" autoplay playsinline></video>
+  </span>
+</div>
+
+
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>
