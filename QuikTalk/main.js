@@ -98,7 +98,7 @@ function getCookie(key) {
   return "";
 }
 
-// Function change cookies
+// Function change cookies!
 function changeCookie(key) {
   document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
@@ -263,7 +263,7 @@ callButton.onclick = async () => {
   // Wait for a new peer if current callee disconnected
   pc.oniceconnectionstatechange = function () {
     if (pc.iceConnectionState == "disconnected") {
-      
+
       // Set new local offer; Must be done to reset signallingState to have-local-offer and allow new remote answer
       pc.setLocalDescription(offer);
 
