@@ -26,13 +26,13 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
 h1 {
+  text-align: center;
   font-size: 3.2em;
   line-height: 1.1;
 }
@@ -75,6 +75,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
@@ -94,4 +95,37 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid rgb(207, 152, 24);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.section2 {
+  text-align: center;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+
+
+.videos {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+  flex: 1;
+  display: grid;
+  border-radius: 8px;
+  border: 3px solid rgb(118, 118, 118);
+}
+
+.error {
+  color: rgb(207, 152, 24);
 }
