@@ -6,6 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QuikTalk</title>
+  <script src="https://kit.fontawesome.com/5fcbd1e952.js" crossorigin="anonymous"></script>
 </head>
 <div id="app"></div>
 <h1 id = "title">QuikTalk</h1>
@@ -17,7 +18,7 @@
     <p id = "errorName" class = "error"></p>
     <br>
 
-    <button id="webcamButton">Next</button>
+    <button id="startButton">Next</button>
 </div>
 
 <div id="section2" class = "section2">
@@ -37,6 +38,8 @@
 
 <div id="videos" class="videos">
   <span>
+    <button id = "microphoneButton"> <i id = "microphoneIcon" class= "fa fa-microphone"></i></button>
+    <button id = "webcamButton"><i id = "webcamIcon" class = "fa-solid fa-video"></i></button>
     <h3 id="username">You:</h3>
     <video width=400px id="webcamVideo" autoplay playsinline></video>
   </span>

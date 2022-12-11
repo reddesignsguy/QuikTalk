@@ -40,7 +40,7 @@ let localStream = null;
 let remoteStream = null;
 
 // Webpage elements
-const webcamButton = document.getElementById("webcamButton");
+const startButton = document.getElementById("startButton");
 const webcamVideo = document.getElementById("webcamVideo");
 const callButton = document.getElementById("callButton");
 const callInput = document.getElementById("callInput");
@@ -118,6 +118,36 @@ async function renderHome() {
     pc.addTrack(track, localStream);
   });
 
+  // Toggle camera button
+  webcamButton.onclick = () => {
+    
+    let track = localStream.getVideoTracks()[0];
+    let icon = document.getElementById("webcamIcon")
+    if (track.enabled)  {
+      track.enabled = false;
+      icon.className = "fa-solid fa-video-slash";
+    }
+    else {
+      track.enabled = true;
+      icon.className = "fa-solid fa-video";
+    }
+  };
+
+  // Toggle microphone button
+  microphoneButton.onclick = () => {
+    
+    let track = localStream.getAudioTracks()[0];
+    let icon = document.getElementById("microphoneIcon")
+    if (track.enabled)  {
+      track.enabled = false;
+      icon.className = "fa solid fa-microphone-slash";
+    }
+    else {
+      track.enabled = true;
+      icon.className = "fa fa-microphone";
+    }
+  };
+
   // Pull tracks from remote stream, add to video stream
   pc.ontrack = (event) => {
     event.streams[0].getTracks().forEach((track) => {
@@ -139,25 +169,25 @@ async function renderHome() {
   videos.style.borderColor = "gray";
   remoteUsername.innerHTML = "";
   changeNameButton.style.display = "block";
-
+  document.getElementById("webcamIcon").className = "fa-solid fa-video";
+  document.getElementById("microphoneIcon").className = "fa fa-microphone";
 
   webcamVideo.srcObject = localStream; // Set local webcam up
   remoteVideo.srcObject = remoteStream; // Set remote webcam up
 
   callButton.disabled = false;
   answerButton.disabled = false;
-  webcamButton.disabled = true;
+  startButton.disabled = true;
 }
 
 // Wireframing lock to home page
-webcamButton.onclick = async () => {
-
+startButton.onclick = async () => {
   // Invalid name checking
-  if (nameInput.value == "") 
-    setErrorName("Name cannot be empty");
-  else if (nameInput.value.length > 30) 
+  if (nameInput.value == "") setErrorName("Name cannot be empty");
+  else if (nameInput.value.length > 30)
     setErrorName("Name must be less than 30 characters long");
-  else {  // Name is valid
+  else {
+    // Name is valid
     // Save name cookie
     document.cookie = "name=" + nameInput.value;
     name = nameInput.value;
@@ -192,7 +222,7 @@ async function renderLock() {
   section1.style.display = "block";
   section2.style.display = "none";
   videos.style.borderColor = "yellow";
-  webcamButton.disabled = false;
+  startButton.disabled = false;
   videos.style.display = "none";
 
   // reset cookie
@@ -205,7 +235,7 @@ changeNameButton.onclick = renderLock;
 // 2. Create offer (For the caller)
 callButton.onclick = async () => {
   // Reference firestore collections for signaling
-  const newRoomID = createID(4);                                  // Create room ID of 4 characters
+  const newRoomID = createID(4); // Create room ID of 4 characters
   const callDoc = firestore.collection("calls").doc(newRoomID);
   const offerCandidates = callDoc.collection("offerCandidates");
   const answerCandidates = callDoc.collection("answerCandidates");
@@ -263,7 +293,6 @@ callButton.onclick = async () => {
   // Wait for a new peer if current callee disconnected
   pc.oniceconnectionstatechange = function () {
     if (pc.iceConnectionState == "disconnected") {
-
       // Set new local offer; Must be done to reset signallingState to have-local-offer and allow new remote answer
       pc.setLocalDescription(offer);
 
@@ -314,8 +343,6 @@ answerButton.onclick = async () => {
 
   setErrorRoom("");
 
-  
-
   pc.onicecandidate = (event) => {
     event.candidate && answerCandidates.add(event.candidate.toJSON());
   };
@@ -363,7 +390,6 @@ answerButton.onclick = async () => {
   };
 };
 
-
 // Set the error message for a failed room join
 function setErrorRoom(message) {
   errorRoom.innerHTML = message;
@@ -378,7 +404,7 @@ function setErrorName(message) {
 hangupButton.onclick = async () => {
   // callerCallDoc can only be != null if the one pressing button is the caller
   // This delete the room ID from the database
-  if (callerCallDoc != null){
+  if (callerCallDoc != null) {
     callerCallDoc.delete();
     callerCallDoc = null;
   }
@@ -389,11 +415,11 @@ hangupButton.onclick = async () => {
 
 // Create's a randomly generated ID of a given length
 function createID(length) {
-  var result           = '';
-  var possibleChars       = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  var result = "";
+  var possibleChars = "abcdefghijklmnopqrstuvwxyz0123456789";
   var charsLength = possibleChars.length;
-  for ( var i = 0; i < length; i++ ) {
-      result += possibleChars.charAt(Math.floor(Math.random() * charsLength));
+  for (var i = 0; i < length; i++) {
+    result += possibleChars.charAt(Math.floor(Math.random() * charsLength));
   }
   return result;
 }
